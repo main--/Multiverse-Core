@@ -31,6 +31,7 @@ import com.onarandombox.MultiverseCore.listeners.MVPlayerListener;
 import com.onarandombox.MultiverseCore.listeners.MVPluginListener;
 import com.onarandombox.MultiverseCore.listeners.MVWeatherListener;
 import com.onarandombox.MultiverseCore.utils.*;
+import com.onarandombox.MultiverseCore.updating.Updater;
 import com.pneumaticraft.commandhandler.CommandHandler;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -69,8 +70,8 @@ public class MultiverseCore extends JavaPlugin implements MVPlugin, Core {
     public static boolean DisplayPermErrors;
     public static boolean TeleportIntercept;
     public static boolean FirstSpawnOverride;
-    public static Map<String, String> teleportQueue = new HashMap<String, String>();
     public static int GlobalDebug = 0;
+    private static Map<String, String> teleportQueue = new HashMap<String, String>();
 
     private AnchorManager anchorManager = new AnchorManager(this);
 
@@ -238,6 +239,7 @@ public class MultiverseCore extends JavaPlugin implements MVPlugin, Core {
 
         // Start the Update Checker
         // updateCheck = new UpdateChecker(this.getDescription().getName(), this.getDescription().getVersion());
+        this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Updater(this), 0L, 1200L);
 
         // Call the Function to load all the Worlds and setup the HashMap
         // When called with null, it tries to load ALL
